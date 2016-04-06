@@ -20,7 +20,7 @@ source:
 
 build:
   skip: true      # [win]
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -47,3 +47,4 @@ about:
 extra:
   recipe-maintainers:
     - jakirkham
+    - minrk
