@@ -5,7 +5,7 @@ Home: http://zeromq.org
 
 Package license: LGPL 3
 
-Feedstock license: BSD
+Feedstock license: BSD 3-Clause
 
 Summary: A high-performance asynchronous messaging library.
 
@@ -69,6 +69,7 @@ Terminology
 
 Current build status
 ====================
+
 Linux: [![Circle CI](https://circleci.com/gh/conda-forge/zeromq-feedstock.svg?style=svg)](https://circleci.com/gh/conda-forge/zeromq-feedstock)
 OSX: [![TravisCI](https://travis-ci.org/conda-forge/zeromq-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/zeromq-feedstock) 
 Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/zeromq-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/zeromq-feedstock/branch/master)
