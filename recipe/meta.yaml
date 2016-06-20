@@ -1,4 +1,5 @@
-{% set version = "4.1.4" %}
+{% set version = "4.1.5" %}
+{% set ver_maj_min_str = "-".join(version.split(".")[:2]) %}
 
 package:
   name: zeromq
@@ -6,8 +7,8 @@ package:
 
 source:
   fn: zeromq-{{ version }}.tar.gz
-  url: http://download.zeromq.org/zeromq-{{ version }}.tar.gz
-  sha1: b632a4b6f8a14390dc17824e37ff7b10831ce2b4
+  url: https://github.com/zeromq/zeromq{{ ver_maj_min_str }}/releases/download/v{{ version }}/zeromq-{{ version }}.tar.gz
+  sha1: 2b7490b77860be3060b1b1f92cd73184d309ca69
   patches:
     # Patch to avoid failing tests on Mac. See issues for details.
     # https://github.com/zeromq/libzmq/issues/1509
@@ -20,7 +21,7 @@ source:
 
 build:
   skip: true      # [win]
-  number: 3
+  number: 0
 
 requirements:
   build:
