@@ -1,23 +1,17 @@
-{% set version = "4.1.5" %}
-{% set ver_maj_min_str = "-".join(version.split(".")[:2]) %}
+{% set name = "zeromq" %}
+{% set version = "4.2.1" %}
+{% set sha256 = "f68bc45b51297577522aa83d8f05727dba54e567a177330c82918454b656f74f" %}
 
 package:
-  name: zeromq
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: zeromq-{{ version }}.tar.gz
-  url: https://github.com/zeromq/zeromq{{ ver_maj_min_str }}/releases/download/v{{ version }}/zeromq-{{ version }}.tar.gz
-  sha1: 2b7490b77860be3060b1b1f92cd73184d309ca69
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://github.com/zeromq/libzmq/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
   patches:
-    # Patch to avoid failing tests on Mac. See issues for details.
-    # https://github.com/zeromq/libzmq/issues/1509
-    # https://github.com/zeromq/libzmq/issues/1878
-    # https://github.com/zeromq/libzmq/issues/1464
-    - Makefile.am.mac.patch    # [osx]
-    # Patch to avoid a failing test on Linux. See issue for details.
-    # https://github.com/zeromq/libzmq/issues/1462
-    - Makefile.am.linux.patch  # [linux]
+    - cmake-install.patch
 
 build:
   skip: true      # [win]
@@ -25,20 +19,20 @@ build:
 
 requirements:
   build:
-    - automake    # [unix]
-    - autoconf    # [unix]
-    - libtool     # [unix]
-    - pkg-config  # [unix]
+    - cmake
     - libsodium   # [unix]
+
 
   run:
     - libsodium   # [unix]
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libzmq.a           # [unix]
-    - test -f ${PREFIX}/lib/libzmq.dylib       # [osx]
-    - test -f ${PREFIX}/lib/libzmq.so          # [linux]
+    - test -f ${PREFIX}/lib/libzmq-static.a  # [unix]
+    - test -f ${PREFIX}/lib/libzmq.so        # [linux]
+    - test -f ${PREFIX}/lib/libzmq.dylib     # [osx]
+    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfig.cmake
+    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake
 
 about:
   home: http://zeromq.org
@@ -49,3 +43,5 @@ extra:
   recipe-maintainers:
     - jakirkham
     - minrk
+    - SylvainCorlay
+    - JohanMabille

@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# default is 10.5 for some reason, which doesn't work
+EXTRA_CMAKE_ARGS=""
 if [[ `uname` == 'Darwin' ]];
 then
-    export MACOSX_DEPLOYMENT_TARGET=10.7
-    export LIBRARY_SEARCH_VAR=DYLD_FALLBACK_LIBRARY_PATH
+    export CMAKE_OSX_DEPLOYMENT_TARGET=""
+    EXTRA_CMAKE_ARGS="-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET} -DZMQ_BUILD_FRAMEWORK=OFF"
 else
     export LIBRARY_SEARCH_VAR=LD_LIBRARY_PATH
 fi
+export EXTRA_CMAKE_ARGS
 
-./autogen.sh
-./configure \
-	    --prefix="${PREFIX}" \
-	    --with-libsodium="${PREFIX}" \
-	    --without-documentation
-make
-eval ${LIBRARY_SEARCH_VAR}="${PREFIX}/lib" make check
+mkdir build
+cd build
+cmake -D WITH_PERF_TOOL=OFF -D ZMQ_BUILD_TESTS=OFF -D ENABLE_CPACK=OFF -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=$PREFIX -D CMAKE_INSTALL_LIBDIR=$PREFIX/lib ${EXTRA_CMAKE_ARGS} ..
 make install
+
