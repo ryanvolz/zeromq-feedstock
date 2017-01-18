@@ -12,28 +12,52 @@ source:
 
   sha256: {{ sha256 }}
   patches:
+    # Fixes in libzmq's cmake which enable a cmake build on windows, and cmake
+    # install in general.
+    #
+    # zeromq/libzmq#2304
+    # zeromq/libzmq#2295
+    # zeromq/libzmq#2294
+    # zeromq/libzmq#2311
+    # zeromq/libzmq#2317
+    #
     - cmake-install.patch
 
 build:
-  skip: true      # [win]
   number: 0
+  skip: true  # [win and py27]
+  features:
+    - vc9     # [win and py27]
+    - vc10    # [win and py34]
+    - vc14    # [win and py>=35]
 
 requirements:
   build:
+    - toolchain
     - cmake
-    - libsodium   # [unix]
-
+    - libsodium
+    - python  # [win]
+    - vc 9    # [win and py27]
+    - vc 10   # [win and py34]
+    - vc 14   # [win and py>=35]
 
   run:
-    - libsodium   # [unix]
+    - libsodium
+    - vc 9    # [win and py27]
+    - vc 10   # [win and py34]
+    - vc 14   # [win and py>=35]
 
 test:
   commands:
     - test -f ${PREFIX}/lib/libzmq.a         # [unix]
     - test -f ${PREFIX}/lib/libzmq.so        # [linux]
     - test -f ${PREFIX}/lib/libzmq.dylib     # [osx]
-    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfig.cmake
-    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake
+    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfig.cmake         # [unix]
+    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake  # [unix]
+    - if exist %LIBRARY_LIB%\libzmq-mt-s-{{ version | replace('.', '_') }}.lib (exit 0) else (exit 1) # [win]
+    - if exist %LIBRARY_BIN%\libzmq-mt-{{ version | replace('.', '_') }}.dll (exit 0) else (exit 1)   # [win]
+    - if exist %LIBRARY_PREFIX%\share\cmake\ZeroMQ\ZeroMQConfig.cmake (exit 0) else (exit 1)          # [win]
+    - if exist %LIBRARY_PREFIX%\share\cmake\ZeroMQ\ZeroMQConfigVersion.cmake (exit 0) else (exit 1)   # [win]
 
 about:
   home: http://zeromq.org
