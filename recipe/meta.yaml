@@ -1,6 +1,6 @@
 {% set name = "zeromq" %}
 {% set version = "4.2.1" %}
-{% set sha256 = "f68bc45b51297577522aa83d8f05727dba54e567a177330c82918454b656f74f" %}
+{% set sha256 = "27d1e82a099228ee85a7ddb2260f40830212402c605a4a10b5e5498a7e0e9d03" %}
 
 package:
   name: {{ name|lower }}
@@ -8,7 +8,8 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/zeromq/libzmq/archive/v{{ version }}.tar.gz
+  url: https://github.com/zeromq/libzmq/releases/download/v{{ version }}/zeromq-{{ version }}.tar.gz
+
   sha256: {{ sha256 }}
   patches:
     - cmake-install.patch
