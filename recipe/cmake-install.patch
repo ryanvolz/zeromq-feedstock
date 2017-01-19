@@ -1,17 +1,17 @@
-From 98a43c1ac88d8801bd1a57f100a575c83da3c2e9 Mon Sep 17 00:00:00 2001
+From ccbb06d6d6625ea3428466035d8f98cedaf5a4da Mon Sep 17 00:00:00 2001
 From: Sylvain Corlay <sylvain.corlay@gmail.com>
-Date: Tue, 17 Jan 2017 19:56:12 +0100
-Subject: [PATCH] Install
+Date: Thu, 19 Jan 2017 17:06:10 +0100
+Subject: [PATCH] cmake-patch
 
 ---
- CMakeLists.txt        | 60 +++++++++++++++++++++++++++++++++++----------------
- INSTALL               | 22 +++++++++++++++++++
- ZeroMQConfig.cmake.in | 15 +++++++++++++
- 3 files changed, 79 insertions(+), 18 deletions(-)
+ CMakeLists.txt        | 64 ++++++++++++++++++++++++++++++++++++---------------
+ INSTALL               | 22 ++++++++++++++++++
+ ZeroMQConfig.cmake.in | 15 ++++++++++++
+ 3 files changed, 82 insertions(+), 19 deletions(-)
  create mode 100644 ZeroMQConfig.cmake.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6c83e9f..3f3118f 100644
+index 6c83e9f..8de676f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -469,6 +469,7 @@ endif ()
@@ -30,7 +30,25 @@ index 6c83e9f..3f3118f 100644
          proxy.cpp
          pub.cpp
          pull.cpp
-@@ -844,17 +844,19 @@ endif ()
+@@ -731,6 +731,8 @@ if (MSVC)
+     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin"
+     COMPILE_DEFINITIONS "DLL_EXPORT")
+   add_library (libzmq-static STATIC ${sources})
++  # NOTE: on windows platform the static library name cannot be the same as the shared library name.
++  # since the .dll also requires a .lib companion file for linking.
+   set_target_properties (libzmq-static PROPERTIES
+     PUBLIC_HEADER "${public_headers}"
+     RELEASE_POSTFIX "${MSVC_TOOLSET}-mt-s-${ZMQ_VERSION_MAJOR}_${ZMQ_VERSION_MINOR}_${ZMQ_VERSION_PATCH}"
+@@ -765,7 +767,7 @@ else ()
+     set_target_properties (libzmq-static PROPERTIES
+       PUBLIC_HEADER "${public_headers}"
+       COMPILE_DEFINITIONS "ZMQ_STATIC"
+-      OUTPUT_NAME "libzmq-static"
++      OUTPUT_NAME "libzmq"
+       PREFIX "")
+ endif ()
+ 
+@@ -844,17 +846,19 @@ endif ()
  #-----------------------------------------------------------------------------
  # installer
  
@@ -56,7 +74,7 @@ index 6c83e9f..3f3118f 100644
              COMPONENT SDK)
      if (NOT CMAKE_PDB_OUTPUT_DIRECTORY)
        install (FILES ${CMAKE_CURRENT_BINARY_DIR}/bin/libzmq${MSVC_TOOLSET}-mt-gd-${ZMQ_VERSION_MAJOR}_${ZMQ_VERSION_MINOR}_${ZMQ_VERSION_PATCH}.pdb DESTINATION lib
-@@ -862,17 +864,17 @@ if (MSVC)
+@@ -862,17 +866,17 @@ if (MSVC)
      endif ()
    else ()
      install (TARGETS libzmq
@@ -80,7 +98,7 @@ index 6c83e9f..3f3118f 100644
  endif ()
  
  # install (FILES ${public_headers}
-@@ -889,11 +891,7 @@ foreach (readme ${readme-docs})
+@@ -889,11 +893,7 @@ foreach (readme ${readme-docs})
    configure_file (${CMAKE_CURRENT_SOURCE_DIR}/${readme} ${CMAKE_CURRENT_BINARY_DIR}/${readme}.txt)
  
    if (NOT ZMQ_BUILD_FRAMEWORK)
@@ -93,7 +111,7 @@ index 6c83e9f..3f3118f 100644
    endif ()
  endforeach ()
  
-@@ -903,8 +901,34 @@ if (WITH_DOC)
+@@ -903,8 +903,34 @@ if (WITH_DOC)
    endif ()
  endif ()
  
@@ -183,5 +201,5 @@ index 0000000..bfdb981
 +set_and_check(${PN}_STATIC_LIBRARY "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/@libzmq_static_file@")
 +check_required_components(${PN})
 -- 
-2.7.4
+2.5.3
 

@@ -29,7 +29,7 @@ requirements:
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libzmq-static.a  # [unix]
+    - test -f ${PREFIX}/lib/libzmq.a         # [unix]
     - test -f ${PREFIX}/lib/libzmq.so        # [linux]
     - test -f ${PREFIX}/lib/libzmq.dylib     # [osx]
     - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfig.cmake
