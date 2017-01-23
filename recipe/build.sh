@@ -16,7 +16,7 @@ make install
 
 # Add missing symlink for libzmq.so.5 required for pyzmq
 # https://github.com/conda-forge/zeromq-feedstock/issues/16
-ln -f -s libzmq.${SHLIB_EXT} $PREFIX/lib/libzmq.${SHLIB_EXT}.5
+ln -f -s libzmq${SHLIB_EXT} $PREFIX/lib/libzmq${SHLIB_EXT}.5
 
 ./bin/test_ancillaries
 ./bin/test_atomics
