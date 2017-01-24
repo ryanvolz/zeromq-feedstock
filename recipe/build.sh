@@ -14,6 +14,10 @@ cd build
 cmake -D WITH_PERF_TOOL=OFF -D ZMQ_BUILD_TESTS=ON -D ENABLE_CPACK=OFF -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=$PREFIX -D CMAKE_INSTALL_LIBDIR=lib ${EXTRA_CMAKE_ARGS} ..
 make install
 
+# Add missing symlink for libzmq.so.5 required for pyzmq
+# https://github.com/conda-forge/zeromq-feedstock/issues/16
+ln -f -s libzmq${SHLIB_EXT} $PREFIX/lib/libzmq${SHLIB_EXT}.5
+
 ./bin/test_ancillaries
 ./bin/test_atomics
 ./bin/test_base85
