@@ -18,7 +18,7 @@ source:
     - 0003-windows-install.patch
 
 build:
-  number: 1
+  number: 2
   features:
     - vc9     # [win and py27]
     - vc10    # [win and py34]
@@ -27,7 +27,7 @@ build:
 requirements:
   build:
     - toolchain
-    - cmake
+    - cmake  # [win]
     - libsodium  # [not (win and py27)]
     - python  # [win]
     - vc 9    # [win and py27]
