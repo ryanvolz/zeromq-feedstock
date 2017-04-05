@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ `uname` == Darwin ]]; then
+  export LDFLAGS="-Wl,-rpath,$PREFIX/lib $LDFLAGS"
+fi
+
 ./configure --prefix="$PREFIX" --with-libsodium
 make -j${NUM_CPUS}
 make check
