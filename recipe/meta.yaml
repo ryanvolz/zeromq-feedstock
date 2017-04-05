@@ -28,6 +28,7 @@ requirements:
   build:
     - toolchain
     - cmake  # [win]
+    - pkg-config  # [unix]
     - libsodium  # [not (win and py27)]
     - python  # [win]
     - vc 9    # [win and py27]
