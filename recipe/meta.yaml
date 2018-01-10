@@ -14,9 +14,10 @@ source:
   sha256: {{ sha256 }}
   patches:
     - 0001-remove-ascii-doc.patch
+    - 0002-lrt-fix.patch
 
 build:
-  number: 0
+  number: 1
   features:
     - vc9     # [win and py27]
     - vc10    # [win and py34]
