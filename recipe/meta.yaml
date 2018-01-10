@@ -15,6 +15,7 @@ source:
   patches:
     - 0001-remove-ascii-doc.patch
     - 0002-lrt-fix.patch
+    - 0003-windows-install.patch
 
 build:
   number: 1
