@@ -1,12 +1,13 @@
 #!/bin/bash
+set -euo pipefail
 
 if [[ `uname` == Darwin ]]; then
   export LDFLAGS="-Wl,-rpath,$PREFIX/lib $LDFLAGS"
 fi
 
 ./configure --prefix="$PREFIX" --with-libsodium
-make -j${NUM_CPUS}
 make check
+make -j${CPU_COUNT}
 make install
 
 # Generate CMake files, so downstream packages can use `find_package(ZeroMQ)`,
@@ -17,9 +18,20 @@ mkdir -p "$CMAKE_DIR"
 
 cat << EOF > "$CMAKE_DIR/ZeroMQConfig.cmake"
 set(PN ZeroMQ)
-set(\${PN}_INCLUDE_DIR "$PREFIX/include")
-set(\${PN}_LIBRARY "$PREFIX/lib/libzmq${SO}")
-set(\${PN}_STATIC_LIBRARY "$PREFIX/lib/libzmq.a")
+set(_CONDA_PREFIX "$PREFIX")
+set(\${PN}_INCLUDE_DIR "\${_CONDA_PREFIX}/include")
+set(\${PN}_LIBRARY "\${_CONDA_PREFIX}/lib/libzmq${SHLIB_EXT}")
+set(\${PN}_STATIC_LIBRARY "\${_CONDA_PREFIX}/lib/libzmq.a")
+
+# add libzmq-4.2.3 cmake targets
+add_library(libzmq SHARED IMPORTED)
+set_property(TARGET libzmq PROPERTY INTERFACE_INCLUDE_DIRECTORIES "\${\${PN}_INCLUDE_DIR}")
+set_property(TARGET libzmq PROPERTY IMPORTED_LOCATION "\${\${PN}_LIBRARY}")
+
+add_library(libzmq-static STATIC IMPORTED "\${\${PN}_INCLUDE_DIR}")
+set_property(TARGET libzmq-static PROPERTY INTERFACE_INCLUDE_DIRECTORIES "\${\${PN}_INCLUDE_DIR}")
+set_property(TARGET libzmq-static PROPERTY IMPORTED_LOCATION "\${\${PN}_STATIC_LIBRARY}")
+
 set(\${PN}_FOUND TRUE)
 EOF
 
