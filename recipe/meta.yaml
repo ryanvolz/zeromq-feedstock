@@ -14,6 +14,7 @@ source:
     - 0001-remove-ascii-doc.patch
     - 0002-lrt-fix.patch
     - 0003-windows-install.patch
+    - 0004-windows-cmake.patch
 
 build:
   number: 2
