@@ -5,7 +5,7 @@ if [[ `uname` == Darwin ]]; then
   export LDFLAGS="-Wl,-rpath,$PREFIX/lib $LDFLAGS"
 fi
 
-./configure --prefix="$PREFIX" --with-libsodium
+./configure --prefix="$PREFIX" --with-libsodium="$PREFIX"
 make check
 make -j${CPU_COUNT}
 make install
