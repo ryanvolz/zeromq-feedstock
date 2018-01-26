@@ -15,6 +15,7 @@ source:
     - 0002-lrt-fix.patch
     - 0003-windows-install.patch
     - 0004-windows-cmake.patch
+    - 0005-osx-test.patch  # [osx]
 
 build:
   number: 2
@@ -27,6 +28,9 @@ requirements:
   build:
     - toolchain
     - cmake  # [win]
+    - automake                     # [osx]
+    - autoconf                     # [osx]		
+    - libtool                      # [osx]
     - pkg-config  # [unix]
     - libsodium  # [not (win and py27)]
     - python  # [win]
