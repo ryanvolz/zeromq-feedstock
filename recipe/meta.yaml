@@ -1,6 +1,6 @@
 {% set name = "zeromq" %}
-{% set version = "4.2.3" %}
-{% set sha256 = "8f1e2b2aade4dbfde98d82366d61baef2f62e812530160d2e6d0a5bb24e40bc0" %}
+{% set version = "4.2.5" %}
+{% set sha256 = "cc9090ba35713d59bb2f7d7965f877036c49c5558ea0c290b0dcc6f2a17e489f" %}
 
 package:
   name: {{ name|lower }}
@@ -18,7 +18,7 @@ source:
     - 0005-osx-test.patch  # [osx]
 
 build:
-  number: 2
+  number: 0
   features:
     - vc9     # [win and py27]
     - vc10    # [win and py34]
