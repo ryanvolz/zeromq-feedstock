@@ -9,8 +9,8 @@ if [[ `uname` == Darwin ]]; then
 ./autogen.sh
 fi
 ./configure --prefix="$PREFIX" --with-libsodium="$PREFIX"
-make check
 make -j${CPU_COUNT}
+make check
 make install
 
 # Generate CMake files, so downstream packages can use `find_package(ZeroMQ)`,
