@@ -11,10 +11,7 @@ source:
   url: https://github.com/zeromq/libzmq/releases/download/v{{ version }}/zeromq-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - 0001-remove-ascii-doc.patch
-    - 0002-lrt-fix.patch
     - 0003-windows-install.patch
-    - 0004-windows-cmake.patch
     - 0005-osx-test.patch  # [osx]
 
 build:
@@ -29,7 +26,7 @@ requirements:
     - toolchain
     - cmake  # [win]
     - automake                     # [osx]
-    - autoconf                     # [osx]		
+    - autoconf                     # [osx]
     - libtool                      # [osx]
     - pkg-config  # [unix]
     - libsodium  # [not (win and py27)]
