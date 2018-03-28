@@ -10,10 +10,12 @@ cmake -G "NMake Makefiles" -D ENABLE_DRAFTS=OFF -D WITH_PERF_TOOL=OFF -D ZMQ_BUI
 if errorlevel 1 exit 1
 nmake install
 if errorlevel 1 exit 1
-script:
+
+:: Copy of dll and import library on windows (required by pyzmq)
+
 copy /y %LIBRARY_BIN%\libzmq-mt-4*.dll /b %LIBRARY_BIN%\libzmq.dll
 if errorlevel 1 exit 1
-copy /y %LIBRARY_LIB%\libzmq-mt-4*.lib /b %LIBRARY_BIN%\libzmq.lib
+copy /y %LIBRARY_LIB%\libzmq-mt-4*.lib /b %LIBRARY_LIB%\libzmq.lib
 if errorlevel 1 exit 1
 
 REM tests can't be built on VC 9
