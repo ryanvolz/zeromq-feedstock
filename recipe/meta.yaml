@@ -16,31 +16,22 @@ source:
     - 0005-osx-test.patch  # [osx]
 
 build:
-  number: 1
-  features:
-    - vc9     # [win and py27]
-    - vc10    # [win and py34]
-    - vc14    # [win and py>=35]
+  number: 2
 
 requirements:
   build:
-    - toolchain
     - cmake  # [win]
     - automake                     # [osx]
     - autoconf                     # [osx]
     - libtool                      # [osx]
     - pkg-config  # [unix]
-    - libsodium  # [not (win and py27)]
-    - python  # [win]
-    - vc 9    # [win and py27]
-    - vc 10   # [win and py34]
-    - vc 14   # [win and py>=35]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - libsodium  # [not (win and vc<14)]
 
   run:
     - libsodium
-    - vc 9    # [win and py27]
-    - vc 10   # [win and py34]
-    - vc 14   # [win and py>=35]
 
 test:
   commands:
