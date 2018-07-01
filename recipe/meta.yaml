@@ -24,10 +24,10 @@ requirements:
     - automake                     # [osx]
     - autoconf                     # [osx]
     - libtool                      # [osx]
-    - pkg-config  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
+    - pkg-config  # [unix]
     - libsodium  # [not (win and vc<14)]
 
   run:
