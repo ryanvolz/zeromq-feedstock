@@ -16,7 +16,7 @@ source:
     - 0005-osx-test.patch  # [osx]
 
 build:
-  number: 1
+  number: 2
   features:
     - vc9     # [win and py27]
     - vc10    # [win and py34]
@@ -49,8 +49,8 @@ test:
     - test -f ${PREFIX}/lib/libzmq.so.5      # [linux]
     - test -f ${PREFIX}/lib/libzmq.dylib     # [osx]
     - test -f ${PREFIX}/lib/libzmq.5.dylib   # [osx]
-    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfig.cmake         # [unix]
-    - test -f ${PREFIX}/share/cmake/ZeroMQ/ZeroMQConfigVersion.cmake  # [unix]
+    - test -f ${PREFIX}/lib/cmake/ZeroMQ/ZeroMQConfig.cmake         # [unix]
+    - test -f ${PREFIX}/lib/cmake/ZeroMQ/ZeroMQConfigVersion.cmake  # [unix]
     - ${PREFIX}/bin/curve_keygen  # [unix]
     - if exist %LIBRARY_LIB%\libzmq-mt-s-{{ version | replace('.', '_') }}.lib (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_BIN%\libzmq-mt-{{ version | replace('.', '_') }}.dll (exit 0) else (exit 1)    # [win]
