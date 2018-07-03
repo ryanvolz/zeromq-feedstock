@@ -22,12 +22,12 @@ requirements:
   build:
     - automake                     # [osx]
     - autoconf                     # [osx]
+    - cmake  # [win]
     - libtool                      # [osx]
+    - pkg-config  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - cmake  # [win]
-    - pkg-config  # [unix]
     - libsodium  # [not (win and vc<14)]
 
   run:
