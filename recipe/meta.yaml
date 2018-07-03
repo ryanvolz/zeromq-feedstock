@@ -28,7 +28,6 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - msinttypes  # [win and vc<14]
     - libsodium  # [not (win and vc<14)]
 
   run:
