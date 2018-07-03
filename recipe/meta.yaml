@@ -17,6 +17,7 @@ source:
 
 build:
   number: 2
+  merge_build_host: true  # [win and vc<14]
 
 requirements:
   build:
@@ -27,6 +28,7 @@ requirements:
     - pkg-config  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - msinttypes  # [win and vc<14]
   host:
     - libsodium  # [not (win and vc<14)]
     # need non-empty host to trigger the right cb3 behavior
