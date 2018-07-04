@@ -19,7 +19,7 @@ make install
 # Generate CMake files, so downstream packages can use `find_package(ZeroMQ)`,
 # which is normally only available when libzmq is itself installed with CMake
 
-CMAKE_DIR="$PREFIX/share/cmake/ZeroMQ"
+CMAKE_DIR="$PREFIX/lib/cmake/ZeroMQ"
 mkdir -p "$CMAKE_DIR"
 
 cat << EOF > "$CMAKE_DIR/ZeroMQConfig.cmake"
