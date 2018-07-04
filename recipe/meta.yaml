@@ -17,30 +17,22 @@ source:
 
 build:
   number: 2
-  features:
-    - vc9     # [win and py27]
-    - vc10    # [win and py34]
-    - vc14    # [win and py>=35]
 
 requirements:
   build:
-    - toolchain
-    - cmake  # [win]
     - automake                     # [osx]
     - autoconf                     # [osx]
+    - cmake                        # [win]
     - libtool                      # [osx]
-    - pkg-config  # [unix]
-    - libsodium  # [not (win and py27)]
-    - python  # [win]
-    - vc 9    # [win and py27]
-    - vc 10   # [win and py34]
-    - vc 14   # [win and py>=35]
-
+    - pkg-config                   # [unix]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - libsodium  # [not (win and vc<14)]
+    # need non-empty host to trigger the right cb3 behavior
+    - vc  # [win and vc<14]
   run:
     - libsodium
-    - vc 9    # [win and py27]
-    - vc 10   # [win and py34]
-    - vc 14   # [win and py>=35]
 
 test:
   commands:
