@@ -5,13 +5,12 @@ if [[ `uname` == Darwin ]]; then
   export LDFLAGS="-Wl,-rpath,$PREFIX/lib $LDFLAGS"
 fi
 
-# find things in both build and host paths
-export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$BUILD_PREFIX/lib/pkgconfig
 
 if [[ `uname` == Darwin ]]; then
 ./autogen.sh
 fi
-./configure --prefix="$PREFIX" --with-libsodium="$PREFIX"
+
+./configure --prefix="$PREFIX" --with-libsodium
 make -j${CPU_COUNT}
 make check
 make install
