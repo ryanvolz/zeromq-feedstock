@@ -16,7 +16,7 @@ source:
     - 0005-osx-test.patch  # [osx]
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
@@ -41,6 +41,9 @@ test:
     - test -f ${PREFIX}/lib/libzmq.so.5      # [linux]
     - test -f ${PREFIX}/lib/libzmq.dylib     # [osx]
     - test -f ${PREFIX}/lib/libzmq.5.dylib   # [osx]
+    # verify libsodium is linked
+    - otool -L ${PREFIX}/lib/libzmq.dylib | grep sodium  # [osx]
+    - ldd ${PREFIX}/lib/libzmq.so | grep sodium  # [linux]
     - test -f ${PREFIX}/lib/cmake/ZeroMQ/ZeroMQConfig.cmake         # [unix]
     - test -f ${PREFIX}/lib/cmake/ZeroMQ/ZeroMQConfigVersion.cmake  # [unix]
     - ${PREFIX}/bin/curve_keygen  # [unix]
